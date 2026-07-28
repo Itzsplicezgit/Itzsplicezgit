@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace</title>
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #232323;
+            background-image: linear-gradient(rgba(35, 35, 35, 0.4), rgba(35, 35, 35, 0.4)), url('assets/background.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 16px 24px;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .eagler-marketplace {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 65px);
+            justify-content: space-between;
+        }
+
+        .marketplace-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+            padding-bottom: 10px;
+            background: transparent;
+            animation: slideDown 0.6s ease-out;
+            flex-shrink: 0;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .marketplace-title-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .marketplace-logo {
+            height: 40px;
+            width: 40px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.4s;
+        }
+
+        .marketplace-logo:hover {
+            transform: rotate(360deg) scale(1.1);
+        }
+
+        .marketplace-title {
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: #fff;
+            margin: 0;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .search-input {
+            background-color: rgba(35, 35, 35, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            color: #fff;
+            padding: 8px 14px;
+            font-size: 0.95rem;
+            width: 250px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            width: 290px;
+            background-color: #232323;
+        }
+
+        .rows-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            flex-grow: 1;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        .row-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .carousel-btn {
+            background: rgba(35, 35, 35, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 1.4rem;
+            padding: 12px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 10;
+            user-select: none;
+            flex-shrink: 0;
+        }
+
+        .carousel-btn:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.05);
+        }
+
+        .carousel-btn:disabled {
+            opacity: 0.25;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .grid-wrapper {
+            overflow: hidden;
+            width: 100%;
+            padding: 10px 0;
+            margin: -10px 0;
+        }
+
+        .mods-grid-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            width: 100%;
+            transition: transform 0.25s ease, opacity 0.25s ease;
+        }
+
+        .mod-card {
+            background-color: rgba(43, 43, 43, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s;
+            height: 100%;
+            will-change: transform;
+        }
+
+        .mod-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .mod-image-container {
+            height: 110px;
+            background-color: rgba(20, 20, 20, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .mod-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .mod-card:hover .mod-image {
+            transform: scale(1.05);
+        }
+
+        .placeholder-image {
+            color: #888;
+            font-size: 0.8rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .mod-info {
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .mod-name {
+            font-size: 1rem;
+            margin: 0;
+            font-weight: 600;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .mod-author {
+            font-size: 0.75rem;
+            color: #aaa;
+            margin: 0;
+            transition: color 0.3s;
+        }
+
+        .mod-card:hover .mod-author {
+            color: #ddd;
+        }
+
+        .mod-description {
+            font-size: 0.78rem;
+            color: #ccc;
+            margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 4px;
+        }
+
+        .release-badge {
+            display: inline-block;
+            background-color: rgba(51, 51, 51, 0.9);
+            color: #fff;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .download-btn {
+            background-color: rgba(51, 51, 51, 0.9);
+            color: #aaa;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-align: center;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .download-btn.active {
+            color: #fff;
+            background-color: rgba(0, 120, 255, 0.7);
+            border-color: rgba(0, 150, 255, 1);
+        }
+
+        .download-btn.active:hover {
+            background-color: rgba(0, 120, 255, 1);
+        }
+
+        .download-btn.disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+            background-color: rgba(40, 40, 40, 0.9);
+        }
+
+        .marketplace-footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            padding-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #aaa;
+            font-size: 0.85rem;
+            background: transparent;
+            animation: fadeIn 1s ease-out;
+            flex-shrink: 0;
+        }
+
+        .footer-bug {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+            transition: transform 0.5s;
+        }
+
+        .marketplace-footer-bottom:hover .footer-bug {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="eagler-marketplace">
+        <header class="marketplace-header">
+            <div class="marketplace-title-container">
+                <img src="assets/logo.png" alt="Logo" class="marketplace-logo">
+                <h1 class="marketplace-title">Marketplace</h1>
+            </div>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search mods..." class="search-input" oninput="filterMods()">
+            </div>
+        </header>
+
+        <div class="rows-wrapper">
+            <div class="row-container">
+                <button class="carousel-btn" id="prevBtn1" onclick="changePage(1, -1)">&#10094;</button>
+                <div class="grid-wrapper">
+                    <div class="mods-grid-row" id="row1Grid"></div>
+                </div>
+                <button class="carousel-btn" id="nextBtn1" onclick="changePage(1, 1)">&#10095;</button>
+            </div>
+            <div class="row-container">
+                <button class="carousel-btn" id="prevBtn2" onclick="changePage(2, -1)">&#10094;</button>
+                <div class="grid-wrapper">
+                    <div class="mods-grid-row" id="row2Grid"></div>
+                </div>
+                <button class="carousel-btn" id="nextBtn2" onclick="changePage(2, 1)">&#10095;</button>
+            </div>
+        </div>
+
+        <footer class="marketplace-footer-bottom">
+            <img src="assets/bug.png" alt="Bug" class="footer-bug">
+            <span>Copyright Eaglercraft Marketplace</span>
+        </footer>
+    </div>
+
+    <script>
+        const modsData = [
+            { priority: 120, name: "The Broken Script", author: "@Itzsplicez", description: "Not downloadable yet", image: "assets/tbs.png", release: "August 15", link: "#", available: false },
+            { priority: 110, name: "???", author: "@???", description: "Encrypted mod package.", image: "", release: "???", link: "#", available: false },
+            { priority: 100, name: "???", author: "@???", description: "Encrypted mod package.", image: "", release: "???", link: "#", available: false },
+            { priority: 90, name: "???", author: "@???", description: "Encrypted mod package.", image: "", release: "???", link: "#", available: false },
+            { priority: 80, name: "???", author: "@???", description: "Encrypted mod package.", image: "", release: "???", link: "#", available: false },
+            { priority: 70, name: "???", author: "@???", description: "Encrypted mod package.", image: "", release: "???", link: "#", available: false },
+            { priority: 60, name: "???", author: "@???", description: "Encrypted mod package.", image: "", release: "???", link: "#", available: false },
+            { priority: 50, name: "???", author: "@???", description: "Encrypted mod package.", image: "", release: "???", link: "#", available: false },
+            { priority: 40, name: "???", author: "@???", description: "Encrypted mod package.", image: "", release: "???", link: "#", available: false },
+            { priority: 30, name: "???", author: "@???", description: "Encrypted mod package.", image: "", release: "???", link: "#", available: false },
+            { priority: 20, name: "???", author: "@???", description: "Encrypted mod package.", image: "", release: "???", link: "#", available: false },
+            { priority: 10, name: "???", author: "@???", description: "Encrypted mod package.", image: "", release: "???", link: "#", available: false }
+        ];
+
+        modsData.sort((a, b) => b.priority - a.priority);
+
+        let page1 = 0;
+        let page2 = 0;
+        const itemsPerRow = 4;
+
+        function createModCard(mod) {
+            const btnClass = mod.available ? 'download-btn active' : 'download-btn disabled';
+            const targetAttr = mod.available ? `href="${mod.link}" target="_blank"` : '';
+            const btnText = mod.available ? 'Download' : 'Coming Soon';
+            const imageElement = mod.image !== "" 
+                ? `<img src="${mod.image}" alt="${mod.name}" class="mod-image">` 
+                : `<span class="placeholder-image">Coming Soon</span>`;
+
+            return `
+                <div class="mod-card" data-name="${mod.name}">
+                    <div class="mod-image-container">
+                        ${imageElement}
+                    </div>
+                    <div class="mod-info">
+                        <div>
+                            <h3 class="mod-name">${mod.name}</h3>
+                            <p class="mod-author">${mod.author}</p>
+                        </div>
+                        <p class="mod-description">${mod.description}</p>
+                        <div class="card-footer">
+                            <span class="release-badge">Release: ${mod.release}</span>
+                            <a ${targetAttr} class="${btnClass}">${btnText}</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderRows(dir1 = 0, dir2 = 0) {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            
+            const filteredMods = modsData.filter(mod => 
+                mod.name.toLowerCase().includes(query) || 
+                mod.author.toLowerCase().includes(query)
+            );
+
+            const halfPoint = Math.ceil(filteredMods.length / 2);
+            const row1Data = filteredMods.slice(0, halfPoint);
+            const row2Data = filteredMods.slice(halfPoint);
+
+            const updateGrid = (rowNum, currentPage, rowData, direction) => {
+                const gridElement = document.getElementById(`row${rowNum}Grid`);
+                
+                if (direction !== 0) {
+                    gridElement.style.transform = `translateX(${direction < 0 ? '30px' : '-30px'})`;
+                    gridElement.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        const startIndex = currentPage * itemsPerRow;
+                        gridElement.innerHTML = rowData.slice(startIndex, startIndex + itemsPerRow).map(createModCard).join('');
+                        gridElement.style.transition = 'none';
+                        gridElement.style.transform = `translateX(${direction < 0 ? '-30px' : '30px'})`;
+                        
+                        setTimeout(() => {
+                            gridElement.style.transition = 'transform 0.25s ease, opacity 0.25s ease';
+                            gridElement.style.transform = 'translateX(0)';
+                            gridElement.style.opacity = '1';
+                        }, 30);
+                    }, 250);
+                } else {
+                    const startIndex = currentPage * itemsPerRow;
+                    gridElement.innerHTML = rowData.slice(startIndex, startIndex + itemsPerRow).map(createModCard).join('');
+                    gridElement.style.transform = 'translateX(0)';
+                    gridElement.style.opacity = '1';
+                }
+
+                document.getElementById(`prevBtn${rowNum}`).disabled = currentPage === 0;
+                document.getElementById(`nextBtn${rowNum}`).disabled = (currentPage + 1) * itemsPerRow >= rowData.length;
+            };
+
+            updateGrid(1, page1, row1Data, dir1);
+            updateGrid(2, page2, row2Data, dir2);
+        }
+
+        function changePage(rowNum, direction) {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filteredMods = modsData.filter(mod => 
+                mod.name.toLowerCase().includes(query) || 
+                mod.author.toLowerCase().includes(query)
+            );
+            
+            const halfPoint = Math.ceil(filteredMods.length / 2);
+
+            if (rowNum === 1) {
+                const row1Data = filteredMods.slice(0, halfPoint);
+                if ((direction > 0 && (page1 + 1) * itemsPerRow < row1Data.length) || (direction < 0 && page1 > 0)) {
+                    page1 += direction;
+                    renderRows(direction, 0);
+                }
+            } else {
+                const row2Data = filteredMods.slice(halfPoint);
+                if ((direction > 0 && (page2 + 1) * itemsPerRow < row2Data.length) || (direction < 0 && page2 > 0)) {
+                    page2 += direction;
+                    renderRows(0, direction);
+                }
+            }
+        }
+
+        function filterMods() {
+            page1 = 0;
+            page2 = 0;
+            renderRows();
+        }
+
+        renderRows();
+
+        const backgroundMusic = new Audio('assets/song.mp3');
+        backgroundMusic.loop = true;
+
+        document.addEventListener('click', () => {
+            backgroundMusic.play().catch(err => {
+                console.log("Audio play blocked or failed:", err);
+            });
+        }, { once: true });
+    </script>
+</body>
+</html>
