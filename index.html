@@ -32,6 +32,7 @@ h1 {
     border-radius: 8px;
     font-size: 16px;
     margin-bottom: 25px;
+    box-sizing: border-box;
 }
 
 .file {
@@ -70,7 +71,11 @@ button {
     border: none;
     padding: 9px 18px;
     border-radius: 6px;
-    cursor: not-allowed;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #ccc;
 }
 </style>
 </head>
@@ -99,9 +104,11 @@ button {
                 Releasing August 15
             </div>
 
-            <button disabled>
-                Download
-            </button>
+            <a href="https://drive.google.com/file/d/1GUtMP5_Ji4-oiB1YoV6vx0edu3nn19Uq/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+                <button type="button">
+                    Download
+                </button>
+            </a>
         </div>
     </div>
 
