@@ -2,131 +2,319 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Eaglermod Archive</title>
-
+<link rel="icon" type="image/png" href="assets/curseforge.png">
 <style>
-body {
-    margin: 0;
-    background: white;
-    color: black;
-    font-family: Arial, sans-serif;
+*{box-sizing:border-box}
+body{margin:0;background:#18191b;color:#e8e8e8;font-family:Arial,Helvetica,sans-serif}
+.header{height:64px;background:#111214;border-bottom:1px solid #2b2d30;display:flex;align-items:center;padding:0 24px;position:sticky;top:0;z-index:20}
+.header-logo{width:38px;height:38px;object-fit:contain}
+.header-title{font-size:20px;font-weight:700;margin-left:12px;color:#fff}
+.header-nav{display:flex;gap:24px;margin-left:38px;font-size:14px;color:#aaa}
+.header-nav span{cursor:pointer}
+.header-nav span:hover,.header-nav span.active{color:#fff}
+.layout{display:flex;min-height:calc(100vh - 64px)}
+.sidebar{width:230px;background:#121315;border-right:1px solid #292b2e;padding:22px 14px;flex-shrink:0}
+.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;color:#777;margin:0 12px 10px}
+.sidebar-item{height:40px;display:flex;align-items:center;padding:0 12px;border-radius:4px;color:#aaa;font-size:14px;margin-bottom:3px;cursor:pointer}
+.sidebar-item:hover,.sidebar-item.active{background:#25272a;color:#fff}
+.sidebar-item.active{border-left:3px solid #f16436;padding-left:9px}
+.main{flex:1;max-width:1100px;padding:30px 34px 60px;margin:0 auto}
+.section{display:none}
+.section.active{display:block}
+.breadcrumb{font-size:13px;color:#777;margin-bottom:20px}
+.breadcrumb span{color:#aaa}
+.page-header{margin-bottom:24px}
+.page-header h1,.section-title{font-size:28px;margin:0 0 7px;color:#fff}
+.page-header p,.section-description{margin:0;color:#858585;font-size:14px}
+.search-row{margin-bottom:20px}
+.search-box{width:100%}
+.search-box input{width:100%;height:44px;background:#242629;border:1px solid #35383b;border-radius:4px;color:#fff;padding:0 15px;font-size:14px;outline:none}
+.search-box input:focus{border-color:#35383b;box-shadow:none}
+.mod-count{font-size:13px;color:#777;margin-bottom:10px}
+.mod-card,.featured-card{background:#202225;border:1px solid #303236;border-radius:5px;display:flex;padding:16px;margin-bottom:9px;cursor:pointer}
+.mod-card:hover,.featured-card:hover{background:#25272a;border-color:#414449}
+.mod-icon{width:72px;height:72px;border-radius:5px;object-fit:cover;background:#111;margin-right:15px;flex-shrink:0}
+.mod-info{flex:1;min-width:0}
+.mod-title{font-size:17px;font-weight:700;color:#fff;margin:1px 0 7px}
+.mod-author{font-size:12px;color:#888;margin-bottom:7px}
+.mod-description{font-size:13px;color:#aaa;line-height:1.45}
+.mod-meta{display:flex;gap:15px;margin-top:10px;font-size:11px;color:#707070}
+.mod-right{width:105px;display:flex;align-items:center;justify-content:flex-end}
+.download,.details-download{background:#f16436;border:0;border-radius:4px;color:#fff;padding:9px 14px;font-size:12px;font-weight:700;text-decoration:none;cursor:pointer}
+.download:hover,.details-download:hover{background:#d95127}
+.empty{text-align:center;padding:50px;background:#202225;border:1px solid #303236;border-radius:5px;color:#777}
+.details{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:50;align-items:center;justify-content:center;padding:20px}
+.details.open{display:flex}
+.details-box{width:100%;max-width:650px;background:#202225;border:1px solid #3a3c40;border-radius:6px}
+.details-header{padding:20px;border-bottom:1px solid #303236;display:flex;gap:16px}
+.details-icon{width:90px;height:90px;border-radius:6px;object-fit:cover}
+.details-title{flex:1}
+.details-title h2{font-size:23px;margin:4px 0 8px;color:#fff}
+.details-title p{margin:0;color:#888;font-size:13px}
+.details-body{padding:20px}
+.details-description{font-size:14px;line-height:1.6;color:#aaa;margin:0 0 20px}
+.details-footer{display:flex;justify-content:space-between;align-items:center}
+.close{background:#303236;border:0;border-radius:4px;color:#ccc;padding:10px 18px;cursor:pointer}
+.close:hover{background:#3a3c40}
+@media(max-width:800px){
+.sidebar{display:none}
+.main{padding:25px 15px 45px}
+.header-nav{display:none}
 }
-
-.container {
-    max-width: 700px;
-    margin: 40px auto;
-    padding: 20px;
-}
-
-h1 {
-    text-align: center;
-    font-size: 32px;
-    margin-bottom: 30px;
-}
-
-.search {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 16px;
-    margin-bottom: 25px;
-    box-sizing: border-box;
-}
-
-.file {
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 15px;
-}
-
-.file img {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-}
-
-.info h2 {
-    margin: 0 0 8px;
-}
-
-.author {
-    color: #333;
-    margin-bottom: 5px;
-}
-
-.date {
-    color: #777;
-    margin-bottom: 12px;
-}
-
-button {
-    background: #ddd;
-    color: #777;
-    border: none;
-    padding: 9px 18px;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #ccc;
+@media(max-width:560px){
+.header{padding:0 15px}
+.main{padding:20px 10px}
+.mod-card,.featured-card{padding:12px}
+.mod-icon{width:58px;height:58px;margin-right:11px}
+.mod-title{font-size:15px}
+.mod-description{font-size:12px}
+.mod-meta,.mod-right{display:none}
 }
 </style>
 </head>
-
 <body>
 
-<div class="container">
+<header class="header">
+<img src="assets/cursforge.png" class="header-logo" alt="CurseForge">
+<div class="header-title">Eaglermod Archive</div>
+<nav class="header-nav">
+<span class="active" data-section="mods">Mods</span>
+<span data-section="packs">Mod Packs</span>
+<span data-section="featured">Featured</span>
+<span data-section="updated">Recently Updated</span>
+</nav>
+</header>
 
-<h1>Eaglermod Archive</h1>
+<div class="layout">
 
-<input class="search" id="search" placeholder="Search files..." onkeyup="searchFiles()">
+<aside class="sidebar">
+<div class="sidebar-title">Discover</div>
+<div class="sidebar-item active" data-section="mods">Mods</div>
+<div class="sidebar-item" data-section="packs">Mod Packs</div>
+<div class="sidebar-item" data-section="featured">Featured</div>
+<div class="sidebar-item" data-section="updated">Recently Updated</div>
+</aside>
 
-<div id="files">
+<main class="main">
 
-    <div class="file">
-        <img src="assets/tbs.png" alt="The Broken Script">
-
-        <div class="info">
-            <h2>thebrokenscript.html</h2>
-
-            <div class="author">
-                Author: @Itzsplicez
-            </div>
-
-            <div class="date">
-                Releasing August 15
-            </div>
-
-            <a href="https://drive.google.com/file/d/1GUtMP5_Ji4-oiB1YoV6vx0edu3nn19Uq/view?usp=sharing" target="_blank" rel="noopener noreferrer">
-                <button type="button">
-                    Download
-                </button>
-            </a>
-        </div>
-    </div>
-
+<section id="mods" class="section active">
+<div class="breadcrumb">Home / <span>Mods</span></div>
+<div class="page-header">
+<h1>Mods</h1>
+<p>Discover mods for your Eaglercraft client.</p>
 </div>
 
+<div class="search-row">
+<div class="search-box">
+<input id="search" type="text" placeholder="Search mods..." autocomplete="off">
+</div>
+</div>
+
+<div class="mod-count" id="count">2 mods</div>
+<div id="modsList"></div>
+</section>
+
+<section id="packs" class="section">
+<div class="breadcrumb">Home / <span>Mod Packs</span></div>
+<div class="page-header">
+<h1>Mod Packs</h1>
+<p>Mod packs available in the Eaglermod Archive.</p>
+</div>
+<div class="empty">Empty</div>
+</section>
+
+<section id="featured" class="section">
+<div class="breadcrumb">Home / <span>Featured</span></div>
+<h1 class="section-title">Featured</h1>
+<p class="section-description">Featured mods from the Eaglermod Archive.</p>
+<div id="featuredList"></div>
+</section>
+
+<section id="updated" class="section">
+<div class="breadcrumb">Home / <span>Recently Updated</span></div>
+<h1 class="section-title">Recently Updated</h1>
+<p class="section-description">Recently added and updated mods.</p>
+<div id="updatedList"></div>
+</section>
+
+</main>
+</div>
+
+<div class="details" id="details">
+<div class="details-box">
+<div class="details-header">
+<img class="details-icon" id="detailsImage" src="" alt="">
+<div class="details-title">
+<h2 id="detailsTitle"></h2>
+<p id="detailsAuthor"></p>
+</div>
+</div>
+<div class="details-body">
+<p class="details-description" id="detailsDescription"></p>
+<div class="details-footer">
+<button class="close" onclick="closeDetails()">Close</button>
+<a class="details-download" id="detailsDownload" href="#" target="_blank" rel="noopener noreferrer">Download</a>
+</div>
+</div>
+</div>
 </div>
 
 <script>
-function searchFiles() {
-    let input = document.getElementById("search").value.toLowerCase();
-    let files = document.querySelectorAll(".file");
-
-    files.forEach(file => {
-        file.style.display = file.innerText.toLowerCase().includes(input)
-            ? "flex"
-            : "none";
-    });
+const mods=[
+{
+id:"tbs",
+name:"The Broken Script",
+author:"@Itzsplicez",
+description:"Adds a psychological horror mod that gives Eaglercraft a creepy and unsettling feeling with a darker and more disturbing atmosphere.",
+image:"assets/tbs.png",
+download:"https://drive.google.com/file/d/1GUtMP5_Ji4-oiB1YoV6vx0edu3nn19Uq/view?usp=sharing",
+category:"Client Mod",
+date:"2026-08-15",
+featured:true
+},
+{
+id:"emerald",
+name:"Emerald Armor",
+author:"@EaglerMeow",
+description:"Adds a full emerald armor set with a simple emerald design. Includes a helmet, chestplate, leggings, and boots for a complete emerald-themed armor set.",
+image:"assets/logo1.png",
+download:"eg.mpp",
+category:"Armor",
+date:"2026-08-16",
+featured:false
 }
+];
+
+const search=document.getElementById("search");
+
+function renderMods(){
+const query=search.value.trim().toLowerCase();
+
+const filtered=mods.filter(mod=>
+mod.name.toLowerCase().includes(query)||
+mod.author.toLowerCase().includes(query)||
+mod.description.toLowerCase().includes(query)
+);
+
+document.getElementById("count").textContent=filtered.length+(filtered.length===1?" mod":" mods");
+
+document.getElementById("modsList").innerHTML=filtered.length
+?filtered.map(mod=>modCard(mod)).join("")
+:'<div class="empty">No mods found.</div>';
+}
+
+function modCard(mod){
+return`
+<div class="mod-card" onclick="openMod('${mod.id}')">
+<img class="mod-icon" src="${mod.image}" alt="${escapeHTML(mod.name)}">
+<div class="mod-info">
+<div class="mod-title">${escapeHTML(mod.name)}</div>
+<div class="mod-author">by ${escapeHTML(mod.author)}</div>
+<div class="mod-description">${escapeHTML(mod.description)}</div>
+<div class="mod-meta">
+<span>${escapeHTML(mod.category)}</span>
+<span>Updated ${formatDate(mod.date)}</span>
+</div>
+</div>
+<div class="mod-right">
+<a class="download" href="${mod.download}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">Download</a>
+</div>
+</div>`;
+}
+
+function renderFeatured(){
+const featured=mods.filter(mod=>mod.featured);
+
+document.getElementById("featuredList").innerHTML=featured.map(mod=>`
+<div class="featured-card" onclick="openMod('${mod.id}')">
+<img class="mod-icon" src="${mod.image}" alt="${escapeHTML(mod.name)}">
+<div class="mod-info">
+<div class="mod-title">${escapeHTML(mod.name)}</div>
+<div class="mod-author">by ${escapeHTML(mod.author)}</div>
+<div class="mod-description">${escapeHTML(mod.description)}</div>
+</div>
+</div>
+`).join("");
+}
+
+function renderUpdated(){
+const updated=[...mods].sort((a,b)=>new Date(b.date)-new Date(a.date));
+
+document.getElementById("updatedList").innerHTML=updated.map(mod=>`
+<div class="featured-card" onclick="openMod('${mod.id}')">
+<img class="mod-icon" src="${mod.image}" alt="${escapeHTML(mod.name)}">
+<div class="mod-info">
+<div class="mod-title">${escapeHTML(mod.name)}</div>
+<div class="mod-author">by ${escapeHTML(mod.author)}</div>
+<div class="mod-description">${escapeHTML(mod.description)}</div>
+<div class="mod-meta">
+<span>Updated ${formatDate(mod.date)}</span>
+</div>
+</div>
+</div>
+`).join("");
+}
+
+function showSection(section){
+document.querySelectorAll(".section").forEach(el=>{
+el.classList.toggle("active",el.id===section);
+});
+
+document.querySelectorAll("[data-section]").forEach(el=>{
+el.classList.toggle("active",el.dataset.section===section);
+});
+
+window.scrollTo(0,0);
+}
+
+document.querySelectorAll("[data-section]").forEach(el=>{
+el.addEventListener("click",()=>showSection(el.dataset.section));
+});
+
+function openMod(id){
+const mod=mods.find(m=>m.id===id);
+if(!mod)return;
+
+document.getElementById("detailsImage").src=mod.image;
+document.getElementById("detailsTitle").textContent=mod.name;
+document.getElementById("detailsAuthor").textContent="by "+mod.author;
+document.getElementById("detailsDescription").textContent=mod.description;
+document.getElementById("detailsDownload").href=mod.download;
+document.getElementById("details").classList.add("open");
+}
+
+function closeDetails(){
+document.getElementById("details").classList.remove("open");
+}
+
+document.getElementById("details").addEventListener("click",e=>{
+if(e.target===document.getElementById("details"))closeDetails();
+});
+
+document.addEventListener("keydown",e=>{
+if(e.key==="Escape")closeDetails();
+});
+
+search.addEventListener("input",renderMods);
+
+function formatDate(date){
+return new Date(date+"T00:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});
+}
+
+function escapeHTML(value){
+return String(value)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+}
+
+renderMods();
+renderFeatured();
+renderUpdated();
 </script>
 
 </body>
