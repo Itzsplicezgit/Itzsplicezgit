@@ -3,61 +3,87 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Eaglermod Archive</title>
+<title>Eaglermod Archive - CurseForge</title>
 <link rel="icon" type="image/png" href="assets/curseforge.png">
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#18191b;color:#e8e8e8;font-family:Arial,Helvetica,sans-serif}
-.header{height:64px;background:#111214;border-bottom:1px solid #2b2d30;display:flex;align-items:center;padding:0 24px;position:sticky;top:0;z-index:20}
-.header-logo{width:38px;height:38px;object-fit:contain}
-.header-title{font-size:20px;font-weight:700;margin-left:12px;color:#fff}
-.header-nav{display:flex;gap:24px;margin-left:38px;font-size:14px;color:#aaa}
-.header-nav span{cursor:pointer}
-.header-nav span:hover,.header-nav span.active{color:#fff}
+body{margin:0;background:#131313;color:#e8e8e8;font-family:Arial,Helvetica,sans-serif}
+
+/* Header */
+.header{height:64px;background:#1b1b1b;border-bottom:1px solid #2a2a2a;display:flex;align-items:center;padding:0 24px;position:sticky;top:0;z-index:20}
+.header-logo{width:34px;height:34px;object-fit:contain}
+.header-title{font-size:18px;font-weight:700;margin-left:12px;color:#fff;letter-spacing:0.5px}
+.header-nav{display:flex;gap:24px;margin-left:38px;font-size:14px;color:#b3b3b3;font-weight:600}
+.header-nav span{cursor:pointer;padding:21px 0;border-bottom:2px solid transparent;transition:all 0.2s}
+.header-nav span:hover,.header-nav span.active{color:#fff;border-bottom-color:#f16436}
+
+/* Layout */
 .layout{display:flex;min-height:calc(100vh - 64px)}
-.sidebar{width:230px;background:#121315;border-right:1px solid #292b2e;padding:22px 14px;flex-shrink:0}
-.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;color:#777;margin:0 12px 10px}
-.sidebar-item{height:40px;display:flex;align-items:center;padding:0 12px;border-radius:4px;color:#aaa;font-size:14px;margin-bottom:3px;cursor:pointer}
-.sidebar-item:hover,.sidebar-item.active{background:#25272a;color:#fff}
-.sidebar-item.active{border-left:3px solid #f16436;padding-left:9px}
+.sidebar{width:240px;background:#181818;border-right:1px solid #282828;padding:22px 14px;flex-shrink:0}
+.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;color:#757575;margin:0 12px 10px;letter-spacing:0.8px}
+.sidebar-item{height:40px;display:flex;align-items:center;padding:0 12px;border-radius:4px;color:#b3b3b3;font-size:14px;font-weight:600;margin-bottom:4px;cursor:pointer;transition:background 0.15s, color 0.15s}
+.sidebar-item:hover{background:#222222;color:#fff}
+.sidebar-item.active{background:#2a2a2a;color:#f16436;border-left:3px solid #f16436;padding-left:9px}
+
 .main{flex:1;max-width:1100px;padding:30px 34px 60px;margin:0 auto}
 .section{display:none}
 .section.active{display:block}
-.breadcrumb{font-size:13px;color:#777;margin-bottom:20px}
-.breadcrumb span{color:#aaa}
+.breadcrumb{font-size:12px;color:#757575;margin-bottom:20px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
+.breadcrumb span{color:#b3b3b3}
 .page-header{margin-bottom:24px}
-.page-header h1,.section-title{font-size:28px;margin:0 0 7px;color:#fff}
-.page-header p,.section-description{margin:0;color:#858585;font-size:14px}
+.page-header h1,.section-title{font-size:26px;margin:0 0 7px;color:#fff;font-weight:700}
+.page-header p,.section-description{margin:0;color:#888888;font-size:14px}
+
+/* Search */
 .search-row{margin-bottom:20px}
 .search-box{width:100%}
-.search-box input{width:100%;height:44px;background:#242629;border:1px solid #35383b;border-radius:4px;color:#fff;padding:0 15px;font-size:14px;outline:none}
-.search-box input:focus{border-color:#35383b;box-shadow:none}
-.mod-count{font-size:13px;color:#777;margin-bottom:10px}
-.mod-card,.featured-card{background:#202225;border:1px solid #303236;border-radius:5px;display:flex;padding:16px;margin-bottom:9px;cursor:pointer}
-.mod-card:hover,.featured-card:hover{background:#25272a;border-color:#414449}
-.mod-icon{width:72px;height:72px;border-radius:5px;object-fit:cover;background:#111;margin-right:15px;flex-shrink:0}
+.search-box input{width:100%;height:42px;background:#222222;border:1px solid #333333;border-radius:4px;color:#fff;padding:0 15px;font-size:14px;outline:none;transition:border-color 0.2s}
+.search-box input:focus{border-color:#f16436}
+.mod-count{font-size:12px;color:#757575;margin-bottom:12px;font-weight:700;text-transform:uppercase}
+
+/* Mod Cards */
+.mod-card,.featured-card,.announcement-card{background:#1e1e1e;border:1px solid #2d2d2d;border-radius:6px;display:flex;padding:16px;margin-bottom:12px;cursor:pointer;transition:border-color 0.2s, background 0.2s}
+.mod-card:hover,.featured-card:hover,.announcement-card:hover{background:#242424;border-color:#444444}
+.mod-icon{width:68px;height:68px;border-radius:6px;object-fit:cover;background:#111;margin-right:16px;flex-shrink:0}
 .mod-info{flex:1;min-width:0}
-.mod-title{font-size:17px;font-weight:700;color:#fff;margin:1px 0 7px}
-.mod-author{font-size:12px;color:#888;margin-bottom:7px}
-.mod-description{font-size:13px;color:#aaa;line-height:1.45}
-.mod-meta{display:flex;gap:15px;margin-top:10px;font-size:11px;color:#707070}
-.mod-right{width:105px;display:flex;align-items:center;justify-content:flex-end}
-.download,.details-download{background:#f16436;border:0;border-radius:4px;color:#fff;padding:9px 14px;font-size:12px;font-weight:700;text-decoration:none;cursor:pointer}
-.download:hover,.details-download:hover{background:#d95127}
-.empty{text-align:center;padding:50px;background:#202225;border:1px solid #303236;border-radius:5px;color:#777}
-.details{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:50;align-items:center;justify-content:center;padding:20px}
+.mod-title{font-size:16px;font-weight:700;color:#fff;margin:0 0 4px;display:flex;align-items:center;gap:8px}
+.mod-author{font-size:12px;color:#888;margin-bottom:8px}
+.mod-author span{color:#f16436}
+.mod-description{font-size:13px;color:#b3b3b3;line-height:1.45}
+.mod-meta{display:flex;gap:12px;margin-top:12px;font-size:11px;color:#888}
+.tag{background:#2a2a2a;color:#ccc;padding:3px 8px;border-radius:3px;font-weight:600}
+
+.mod-right{width:110px;display:flex;align-items:center;justify-content:flex-end}
+.download,.details-download{background:#f16436;border:0;border-radius:4px;color:#fff;padding:8px 16px;font-size:12px;font-weight:700;text-decoration:none;cursor:pointer;transition:background 0.2s}
+.download:hover,.details-download:hover{background:#d85226}
+
+/* Announcement Cards */
+.announcement-card{cursor:default;flex-direction:column;gap:14px;padding:20px}
+.announcement-header{display:flex;align-items:center;gap:14px}
+.announcement-pfp{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid #f16436}
+.announcement-user-info{display:flex;flex-direction:column}
+.announcement-author{font-size:15px;font-weight:700;color:#fff}
+.announcement-date{font-size:12px;color:#757575}
+.announcement-badge{background:#f16436;color:#fff;font-size:10px;font-weight:700;padding:2px 6px;border-radius:3px;margin-left:6px;text-transform:uppercase}
+.announcement-content{font-size:14px;color:#ccc;line-height:1.6;background:#181818;padding:16px;border-radius:6px;border:1px solid #282828}
+
+.empty{text-align:center;padding:50px;background:#1e1e1e;border:1px solid #2d2d2d;border-radius:6px;color:#757575}
+
+/* Modal */
+.details{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:50;align-items:center;justify-content:center;padding:20px}
 .details.open{display:flex}
-.details-box{width:100%;max-width:650px;background:#202225;border:1px solid #3a3c40;border-radius:6px}
-.details-header{padding:20px;border-bottom:1px solid #303236;display:flex;gap:16px}
-.details-icon{width:90px;height:90px;border-radius:6px;object-fit:cover}
+.details-box{width:100%;max-width:650px;background:#1e1e1e;border:1px solid #333;border-radius:6px}
+.details-header{padding:20px;border-bottom:1px solid #2d2d2d;display:flex;gap:16px}
+.details-icon{width:80px;height:80px;border-radius:6px;object-fit:cover}
 .details-title{flex:1}
-.details-title h2{font-size:23px;margin:4px 0 8px;color:#fff}
+.details-title h2{font-size:22px;margin:2px 0 6px;color:#fff}
 .details-title p{margin:0;color:#888;font-size:13px}
 .details-body{padding:20px}
-.details-description{font-size:14px;line-height:1.6;color:#aaa;margin:0 0 20px}
+.details-description{font-size:14px;line-height:1.6;color:#ccc;margin:0 0 20px}
 .details-footer{display:flex;justify-content:space-between;align-items:center}
-.close{background:#303236;border:0;border-radius:4px;color:#ccc;padding:10px 18px;cursor:pointer}
-.close:hover{background:#3a3c40}
+.close{background:#2a2a2a;border:0;border-radius:4px;color:#ccc;padding:9px 16px;cursor:pointer;font-weight:600}
+.close:hover{background:#333}
+
 @media(max-width:800px){
 .sidebar{display:none}
 .main{padding:25px 15px 45px}
@@ -67,7 +93,7 @@ body{margin:0;background:#18191b;color:#e8e8e8;font-family:Arial,Helvetica,sans-
 .header{padding:0 15px}
 .main{padding:20px 10px}
 .mod-card,.featured-card{padding:12px}
-.mod-icon{width:58px;height:58px;margin-right:11px}
+.mod-icon{width:54px;height:54px;margin-right:12px}
 .mod-title{font-size:15px}
 .mod-description{font-size:12px}
 .mod-meta,.mod-right{display:none}
@@ -77,10 +103,11 @@ body{margin:0;background:#18191b;color:#e8e8e8;font-family:Arial,Helvetica,sans-
 <body>
 
 <header class="header">
-<img src="assets/cursforge.png" class="header-logo" alt="CurseForge">
+<img src="assets/curseforge.png" class="header-logo" alt="CurseForge">
 <div class="header-title">Eaglermod Archive</div>
 <nav class="header-nav">
 <span class="active" data-section="mods">Mods</span>
+<span data-section="announcements">Announcements</span>
 <span data-section="packs">Mod Packs</span>
 <span data-section="featured">Featured</span>
 <span data-section="updated">Recently Updated</span>
@@ -92,6 +119,7 @@ body{margin:0;background:#18191b;color:#e8e8e8;font-family:Arial,Helvetica,sans-
 <aside class="sidebar">
 <div class="sidebar-title">Discover</div>
 <div class="sidebar-item active" data-section="mods">Mods</div>
+<div class="sidebar-item" data-section="announcements">Announcements</div>
 <div class="sidebar-item" data-section="packs">Mod Packs</div>
 <div class="sidebar-item" data-section="featured">Featured</div>
 <div class="sidebar-item" data-section="updated">Recently Updated</div>
@@ -103,7 +131,7 @@ body{margin:0;background:#18191b;color:#e8e8e8;font-family:Arial,Helvetica,sans-
 <div class="breadcrumb">Home / <span>Mods</span></div>
 <div class="page-header">
 <h1>Mods</h1>
-<p>Discover mods for your Eaglercraft client.</p>
+<p>Discover and download mods for your Eaglercraft client.</p>
 </div>
 
 <div class="search-row">
@@ -112,31 +140,40 @@ body{margin:0;background:#18191b;color:#e8e8e8;font-family:Arial,Helvetica,sans-
 </div>
 </div>
 
-<div class="mod-count" id="count">2 mods</div>
+<div class="mod-count" id="count">0 mods</div>
 <div id="modsList"></div>
+</section>
+
+<section id="announcements" class="section">
+<div class="breadcrumb">Home / <span>Announcements</span></div>
+<div class="page-header">
+<h1>Announcements</h1>
+<p>Latest updates and news regarding the Eaglermod Archive.</p>
+</div>
+<div id="announcementsList"></div>
 </section>
 
 <section id="packs" class="section">
 <div class="breadcrumb">Home / <span>Mod Packs</span></div>
 <div class="page-header">
 <h1>Mod Packs</h1>
-<p>Mod packs available in the Eaglermod Archive.</p>
+<p>Curated mod packs available in the Eaglermod Archive.</p>
 </div>
-<div class="empty">Empty</div>
+<div class="empty">No mod packs available right now.</div>
 </section>
 
 <section id="featured" class="section">
 <div class="breadcrumb">Home / <span>Featured</span></div>
 <h1 class="section-title">Featured</h1>
-<p class="section-description">Featured mods from the Eaglermod Archive.</p>
-<div id="featuredList"></div>
+<p class="section-description">Hand-picked mods from the Eaglermod Archive.</p>
+<div id="featuredList" style="margin-top: 20px;"></div>
 </section>
 
 <section id="updated" class="section">
 <div class="breadcrumb">Home / <span>Recently Updated</span></div>
 <h1 class="section-title">Recently Updated</h1>
 <p class="section-description">Recently added and updated mods.</p>
-<div id="updatedList"></div>
+<div id="updatedList" style="margin-top: 20px;"></div>
 </section>
 
 </main>
@@ -162,6 +199,17 @@ body{margin:0;background:#18191b;color:#e8e8e8;font-family:Arial,Helvetica,sans-
 </div>
 
 <script>
+const announcements = [
+{
+author: "Itzsplicez",
+pfp: "itzsplicezpfp.png",
+role: "Owner",
+date: "2026-09-03",
+title: "Website UI Revamp Update!",
+content: "Hello everyone I have officialy updated the website to look more professional."
+}
+];
+
 const mods=[
 {
 id:"herobrine",
@@ -231,11 +279,11 @@ featured:false
 },
 {
 id:"emerald",
-name:"Emerald Armor",
+name:"Emerald and Ruby Armor",
 author:"@EaglerMeow",
-description:"Adds a full emerald armor set with a simple emerald design. Includes a helmet, chestplate, leggings, and boots for a complete emerald armor set.",
-image:"assets/mm1.png",
-download:"https://drive.google.com/uc?export=download&id=1RVUp8OYd0EYJuFYEPDyqhOIW0BPRRj6D",
+description:"Adds a full emerald and ruby armor set with a simple designs. Includes a helmet, chestplate, leggings, and boots for a complete set.",
+image:"assets/rubys.png",
+download:"https://drive.usercontent.google.com/download?id=13g_TKc_TU3mTJMdok1kdYbaeeOvb61cm&export=download&authuser=0",
 category:"Armor",
 date:"2026-08-16",
 featured:false
@@ -266,10 +314,10 @@ return`
 <img class="mod-icon" src="${mod.image}" alt="${escapeHTML(mod.name)}">
 <div class="mod-info">
 <div class="mod-title">${escapeHTML(mod.name)}</div>
-<div class="mod-author">by ${escapeHTML(mod.author)}</div>
+<div class="mod-author">by <span>${escapeHTML(mod.author)}</span></div>
 <div class="mod-description">${escapeHTML(mod.description)}</div>
 <div class="mod-meta">
-<span>${escapeHTML(mod.category)}</span>
+<span class="tag">${escapeHTML(mod.category)}</span>
 <span>Updated ${formatDate(mod.date)}</span>
 </div>
 </div>
@@ -277,6 +325,24 @@ return`
 <a class="download" href="${mod.download}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">Download</a>
 </div>
 </div>`;
+}
+
+function renderAnnouncements(){
+document.getElementById("announcementsList").innerHTML = announcements.map(item => `
+<div class="announcement-card">
+<div class="announcement-header">
+<img class="announcement-pfp" src="${escapeHTML(item.pfp)}" alt="${escapeHTML(item.author)}">
+<div class="announcement-user-info">
+<div class="announcement-author">${escapeHTML(item.author)} <span class="announcement-badge">${escapeHTML(item.role)}</span></div>
+<div class="announcement-date">${formatDate(item.date)}</div>
+</div>
+</div>
+<div class="announcement-content">
+<strong style="color:#fff; display:block; margin-bottom:8px; font-size:16px;">${escapeHTML(item.title)}</strong>
+${escapeHTML(item.content)}
+</div>
+</div>
+`).join("");
 }
 
 function renderFeatured(){
@@ -287,7 +353,7 @@ document.getElementById("featuredList").innerHTML=featured.map(mod=>`
 <img class="mod-icon" src="${mod.image}" alt="${escapeHTML(mod.name)}">
 <div class="mod-info">
 <div class="mod-title">${escapeHTML(mod.name)}</div>
-<div class="mod-author">by ${escapeHTML(mod.author)}</div>
+<div class="mod-author">by <span>${escapeHTML(mod.author)}</span></div>
 <div class="mod-description">${escapeHTML(mod.description)}</div>
 </div>
 </div>
@@ -302,7 +368,7 @@ document.getElementById("updatedList").innerHTML=updated.map(mod=>`
 <img class="mod-icon" src="${mod.image}" alt="${escapeHTML(mod.name)}">
 <div class="mod-info">
 <div class="mod-title">${escapeHTML(mod.name)}</div>
-<div class="mod-author">by ${escapeHTML(mod.author)}</div>
+<div class="mod-author">by <span>${escapeHTML(mod.author)}</span></div>
 <div class="mod-description">${escapeHTML(mod.description)}</div>
 <div class="mod-meta">
 <span>Updated ${formatDate(mod.date)}</span>
@@ -368,6 +434,7 @@ return String(value)
 }
 
 renderMods();
+renderAnnouncements();
 renderFeatured();
 renderUpdated();
 </script>
